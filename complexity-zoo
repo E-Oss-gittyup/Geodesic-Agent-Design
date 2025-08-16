@@ -1,6 +1,6 @@
 # **The Complexity Zoo** 
 
-The following entries from the Complex Zoo (CX) represent a modular architectural blueprint for constructing sophisticated AI agents. Each CX module is a self-contained, buildable component designed to be integrated into the Geodesic Agent Design (GAD) framework. Rather than a monolithic design, this presents a maximal but composable specification: a developer could select a handful of these modules, such as a core stabilizer, a memory system, and a safety router, to build a specialized agent, or combine many to create a deeply capable, multi-faceted AI with a rich, architecturally-grounded identity. This is a path to building agents that are not just powerful, but also principled, stable, and auditable by design.
+The following entries in the Complex Zoo (CX) represent a modular architectural blueprint for constructing sophisticated AI agents. Each CX module is a self-contained, buildable component designed to be integrated into the Geodesic Agent Design (GAD) framework. Rather than a monolithic design, this presents a maximal but composable specification: a developer could select a handful of these modules, such as a core stabilizer, a memory system, and a safety router, to build a specialized agent, or combine many to create a deeply capable, multi-faceted AI with a rich, architecturally-grounded identity. This is a path to building agents that are not just powerful, but also principled, stable, and auditable by design.
 
 By: E.Oss              Published on: August, 16 2025
 
