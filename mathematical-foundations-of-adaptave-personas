@@ -2,9 +2,18 @@
 
 This document provides an in-depth explanation of the mathematical formalism underlying the Adaptive Personas framework, making the theory accessible to both theoretical researchers and practical implementers.
 
-## **Why THIS Mathematical Formalism?**
+## **Table of Contents**
 
-The choice of dynamical systems theory isn't arbitrary but directly addresses fundamental problems in current AI agent design:
+1. Why This Mathematical Formalism?  
+2. The Hamiltonian: Energy Landscape of Identity  
+3. State Vectors and Trait Directions  
+4. Geodesic Evolution: The Path of Least Action  
+5. Measurement Framework: From State to Action  
+6. Complete Mathematical Story
+
+## **Why This Mathematical Formalism?**
+
+The choice of dynamical systems theory isn't arbitrary—it directly addresses fundamental problems in current AI agent design:
 
 ### **The Core Problem: Identity Fragility**
 
@@ -81,6 +90,16 @@ These eigenvectors aren't just theoretical—they're grounded in empirical resea
 * Calculated as differences in mean activations between trait-present and trait-absent states  
 * Provides concrete, measurable foundation for abstract mathematical framework
 
+### **From Empirical Vectors to an Orthonormal Basis**
+
+The mathematical formalism of the Hamiltonian requires a basis of eigenvectors that are **orthonormal** (`⟨v_i|v_j⟩ = δ_ij`), representing truly distinct, independent traits. However, the raw "Persona Vectors" discovered via the Chen et al. (2025) pipeline are not guaranteed to be orthogonal. Conceptual overlap between traits (e.g., "evil" and "impolite") means their empirical vectors will be correlated.
+
+To bridge this gap between empirical reality and mathematical rigor, we introduce a standardization step:
+
+* **Gram-Schmidt Orthonormalization:** Before constructing the Hamiltonian, the set of raw, empirically-derived Persona Vectors is transformed into an orthonormal basis using the **Gram-Schmidt process**. This standard procedure takes a set of linearly independent vectors and produces a new set of orthonormal vectors that spans the same conceptual subspace.
+
+This "purification" step is crucial. It ensures that our foundational axes of identity are mathematically pure, allowing the Hamiltonian to be constructed correctly while ensuring the entire framework remains firmly grounded in the initial empirical data.
+
 ### **Normalization Constraint**
 
 The state vector must satisfy the **normalization constraint**:
@@ -134,6 +153,15 @@ The evolution operator **exp(-iΔt Ĥ)** is **unitary**, meaning:
 * Identity coherence remains constant during evolution  
 * Persona can change direction but doesn't degrade or become unstable
 
+### **Defining the Time Step Δt**
+
+The evolution equation relies on the time step `Δt`, a critical hyperparameter that defines the rate and granularity of persona adaptation. `Δt` is not an abstract variable but a concrete engineering choice that can be implemented in several ways:
+
+* **Turn-Based Evolution:** The most straightforward approach is to define one step of evolution as a single user-assistant exchange. In this model, `Δt` is a constant value, tuned to allow the agent's persona to adapt meaningfully to a user's query without shifting too drastically in a single turn.  
+* **Token-Based Evolution:** For more fine-grained dynamics, a much smaller `Δt` can be applied for each token the agent generates. This allows the agent's persona to subtly shift and evolve *within* a single response, leading to more nuanced and context-aware behavior.
+
+The choice of `Δt` directly controls the agent's responsiveness. A larger `Δt` leads to a more fluid, rapidly adapting persona, while a smaller `Δt` results in a more stable, slow-to-change identity.
+
 ## **Measurement Framework: From State to Action**
 
 ### **The Problem: Connecting Internal State to External Action**
@@ -173,6 +201,17 @@ After selecting capability k, the state updates to:
 ```
 
 This creates a **feedback loop**: persona influences action selection, and actions reshape persona.
+
+### **Long-Term Dynamics and Identity Coherence**
+
+The state collapse that occurs after each measurement (`|ψ_post⟩ = M̂_k |ψ⟩ / √P(k | ψ)`) creates a necessary feedback loop where actions reshape the persona. However, over thousands of conversational turns, the cumulative effect of these small shifts could potentially cause the state to drift away from its core identity, even with the stabilizing valleys of the `Ĥ_core`.
+
+To ensure long-term coherence and prevent this drift, we introduce an **Identity Anchor Mechanism**:
+
+* **Relaxation Towards Core Identity:** After a state collapse, a gentle "relaxation" force is applied. This force pulls the post-measurement state `|ψ_post⟩` back towards the nearest low-energy attractor state (i.e., the bottom of the closest beneficial "valley").  
+* **Mathematical Form:** This can be implemented as a simple mixing step: `|ψ_final⟩ = (1 - ε)|ψ_post⟩ + ε|ψ_attractor⟩` where `ε` is a small mixing parameter that controls the strength of the anchor.
+
+This mechanism ensures that while the agent's persona is fluid enough to adapt to actions and context on a turn-by-turn basis, it is always tethered to its foundational, architecturally-defined identity, guaranteeing long-term stability and preventing unintended evolution.
 
 ### **Practical Implementation: Soft Routing**
 
