@@ -27,7 +27,6 @@ Approach	Interventional: Measures and corrects existing models.	Architectural: D
 Identity	A static vector representing a fixed trait.	A dynamic state vector that evolves over time.
 Control	External Steering: Activations are manually pushed.	Internal Dynamics: Stability emerges from the Hamiltonian's structure.
 
-Export to Sheets
 The "Persona Vectors" research validates that the core mathematical objects of this framework are real and controllable. Geodesic Agent Design proposes that these objects should not just be used for post-hoc intervention, but should serve as the foundational building blocks for the next generation of AI agents.
 
 About This Project
